@@ -16,7 +16,7 @@ This repository contains the code for a classic Snake game implemented using the
 
 ## Dependencies
 
-- pygame==2.0.0
+- pygame
 
 ## Running the Game
 
