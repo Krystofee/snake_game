@@ -6,14 +6,14 @@ class Snake:
     def __init__(self):
         self.length = INITIAL_SNAKE_LENGTH
         self.positions = [((SCREEN_SIZE[0] // 2), (SCREEN_SIZE[1] // 2))]
-        self.direction = random.choice([pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT])
+        self.direction = random.choice([(0, -1), (0, 1), (-1, 0), (1, 0)])
         self.grow = False
 
     def get_head_position(self):
         return self.positions[0]
 
     def turn(self, point):
-        if len(self.positions) > 1 and (point[0] * -1, point[1] * -1) == self.direction:
+        if self.length > 1 and (point[0] * -1, point[1] * -1) == self.direction:
             return
         else:
             self.direction = point
@@ -34,7 +34,7 @@ class Snake:
     def reset(self):
         self.length = INITIAL_SNAKE_LENGTH
         self.positions = [((SCREEN_SIZE[0] // 2), (SCREEN_SIZE[1] // 2))]
-        self.direction = random.choice([pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT])
+        self.direction = random.choice([(0, -1), (0, 1), (-1, 0), (1, 0)])
 
     def check_collision(self):
         if self.positions[0] in self.positions[1:]:
@@ -48,13 +48,13 @@ class Snake:
             pygame.draw.rect(surface, (93, 216, 228), rect, 1)
 
     def handle_keys(self, event):
-        if event.key == pygame.K_UP:
+        if event.key == pygame.K_UP and self.direction != (0, 1):
             self.turn((0, -1))
-        elif event.key == pygame.K_DOWN:
+        elif event.key == pygame.K_DOWN and self.direction != (0, -1):
             self.turn((0, 1))
-        elif event.key == pygame.K_LEFT:
+        elif event.key == pygame.K_LEFT and self.direction != (1, 0):
             self.turn((-1, 0))
-        elif event.key == pygame.K_RIGHT:
+        elif event.key == pygame.K_RIGHT and self.direction != (-1, 0):
             self.turn((1, 0))
 
     def grow_snake(self):
